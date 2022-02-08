@@ -11,6 +11,7 @@ namespace SeleniumTests
             var options = new ChromeOptions();
             options.AddArgument("no-sandbox");
             options.AddArgument("--disable-notifications");
+            options.AddArgument("--disable-extensions");
             options.AddArgument("ignore-certificate-errors");
             options.AddArgument("--start-maximized");
             options.AddAdditionalOption("useAutomationExtension", false);

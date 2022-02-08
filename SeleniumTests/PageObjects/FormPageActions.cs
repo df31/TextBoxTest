@@ -17,6 +17,16 @@ namespace SeleniumTests.PageObjects
             _driver = driver;
             _driver.Url = config["FormPage:Url"];
             _formPage = new FormPage(_driver);
+            dismissAdsBanner();
+        }
+
+        private void dismissAdsBanner()
+        {
+            if (_formPage.IsElementPresent(By.XPath("//*[id='close-fixedban']/img")))
+            {
+               var hideAdsButton =  _driver.FindElement(By.XPath("//*[id='close-fixedban']/img"));
+                hideAdsButton.Click();
+            }
         }
         public void InputFullName(string name)
         {

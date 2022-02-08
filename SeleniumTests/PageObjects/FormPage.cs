@@ -20,6 +20,18 @@ namespace SeleniumTests.PageObjects
         public IWebElement ReturnedCadr => WaitForElement(By.XPath("//*[@id='output']//*[@id='currentAddress']"));
         public IWebElement ReturnedPadr => WaitForElement(By.XPath("//*[@id='output']//*[@id='permanentAddress']"));
 
+        public bool IsElementPresent(By locatorKey)
+        {
+            try
+            {
+                WaitForElement(locatorKey);
+                return true;
+            }
+            catch (NoSuchElementException e)
+            {
+                return false;
+            }
+        }
         public FormPage(IWebDriver _driver) : base(_driver)
         {
 
