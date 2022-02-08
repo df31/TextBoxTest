@@ -63,6 +63,7 @@ namespace SeleniumTests.PageObjects
 
         public void ClickSubmitButton()
         {
+            WaitForSeconds(1);
             _formPage.SubmitButton.Click();
             scrollToOutpuBox();
         }
