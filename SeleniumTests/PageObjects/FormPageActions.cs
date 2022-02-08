@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Text;
 using OpenQA.Selenium;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Interactions;
+using Microsoft.Extensions.Configuration;
 
 namespace SeleniumTests.PageObjects
 {
@@ -17,16 +18,24 @@ namespace SeleniumTests.PageObjects
             _driver = driver;
             _driver.Url = config["FormPage:Url"];
             _formPage = new FormPage(_driver);
-            dismissAdsBanner();
+            closeFixedBan();
         }
 
-        private void dismissAdsBanner()
+        private void closeFixedBan()
         {
-            if (_formPage.IsElementPresent(By.XPath("//*[id='close-fixedban']/img")))
+            string closeFixedBanId = "close-fixedban";
+            if (_formPage.IsElementPresent(By.Id(closeFixedBanId)))
             {
-               var hideAdsButton =  _driver.FindElement(By.XPath("//*[id='close-fixedban']/img"));
-                hideAdsButton.Click();
+                _driver.FindElement(By.Id(closeFixedBanId)).Click();
             }
+        }
+
+        private void scrollToOutpuBox()
+        {
+            //Actions actions = new Actions(_driver);
+            //actions.MoveToElement(_formPage.OutputBox);
+            //actions.Perform();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView();", _formPage.OutputBox);
         }
         public void InputFullName(string name)
         {
@@ -55,6 +64,7 @@ namespace SeleniumTests.PageObjects
         public void ClickSubmitButton()
         {
             _formPage.SubmitButton.Click();
+            scrollToOutpuBox();
         }
 
         public string GetOutputValue()
